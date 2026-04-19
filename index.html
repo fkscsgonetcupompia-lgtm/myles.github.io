@@ -18,6 +18,7 @@ nav {
   justify-content: space-between;
   padding: 15px 30px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 nav button {
@@ -74,9 +75,10 @@ nav button:hover {
   padding: 10px 15px;
   background: #ff6600;
   color: white;
-  text-decoration: none;
+  border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .btn:hover {
@@ -105,6 +107,7 @@ nav button:hover {
 
 <nav>
   <h2>dC Viagens</h2>
+
   <div>
     <button onclick="mostrar('destinos')">Destinos</button>
     <button onclick="mostrar('promocoes')">Promoções</button>
@@ -133,6 +136,20 @@ nav button:hover {
       <button class="btn" onclick="addCarrinho('Dubai', 5499)">Adicionar</button>
     </div>
 
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e">
+      <h3>Maldivas</h3>
+      <p>R$ 6500</p>
+      <button class="btn" onclick="addCarrinho('Maldivas', 6500)">Adicionar</button>
+    </div>
+
+    <div class="card">
+      <img src="https://res.cloudinary.com/traveltripperweb/image/upload/c_fit,f_auto,h_1200,q_auto,w_1200/v1627681436/bgvlhnmlrwyhm2xwdock.jpg">
+      <h3>Miami</h3>
+      <p>R$ 7299</p>
+      <button class="btn" onclick="addCarrinho('Miami', 7299)">Adicionar</button>
+    </div>
+
   </div>
 </div>
 
@@ -144,9 +161,9 @@ nav button:hover {
 
     <div class="card">
       <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34">
-      <h3>Maldivas</h3>
-      <p>R$ 6500</p>
-      <button class="btn" onclick="addCarrinho('Maldivas', 6500)">Adicionar</button>
+      <h3>Paris Promo</h3>
+      <p>R$ 3499</p>
+      <button class="btn" onclick="addCarrinho('Paris Promo', 3499)">Adicionar</button>
     </div>
 
   </div>
@@ -162,7 +179,7 @@ nav button:hover {
 
     <a class="btn" target="_blank"
        href="https://wa.me/5531993597938">
-      Finalizar no WhatsApp
+      Falar no WhatsApp
     </a>
   </div>
 </div>
@@ -176,7 +193,7 @@ nav button:hover {
 
     <h3>Total: R$ <span id="total">0</span></h3>
 
-    <a class="btn" onclick="finalizar()">Finalizar Compra</a>
+    <button class="btn" onclick="finalizar()">Finalizar Compra</button>
   </div>
 </div>
 
@@ -203,6 +220,7 @@ function atualizar() {
 
   carrinho.forEach(item => {
     total += item.preco;
+
     lista.innerHTML += `
       <div class="item">
         <span>${item.nome}</span>
