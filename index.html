@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>dC Viagens 3.0</title>
+<title>dC Viagens 5.0</title>
 
 <style>
 body {
@@ -17,7 +17,6 @@ nav {
   display: flex;
   justify-content: space-between;
   padding: 15px 30px;
-  align-items: center;
   flex-wrap: wrap;
 }
 
@@ -42,20 +41,14 @@ nav button:hover {
 .aba { display: none; }
 .ativa { display: block; }
 
-.destinos {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
 .card {
   background: white;
   width: 280px;
+  margin: 10px;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  padding-bottom: 15px;
+  padding-bottom: 10px;
 }
 
 .card img {
@@ -64,18 +57,20 @@ nav button:hover {
   object-fit: cover;
 }
 
+.destinos {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .btn {
   background: #ff6600;
   color: white;
   border: none;
   padding: 8px 12px;
+  margin-top: 8px;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 8px;
-}
-
-.btn:hover {
-  background: #e65c00;
 }
 
 .cart {
@@ -86,33 +81,37 @@ nav button:hover {
   border-radius: 10px;
 }
 
-.item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 10px 0;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 8px;
-}
-
-.qty-btn {
-  margin: 0 5px;
-  cursor: pointer;
-  font-weight: bold;
+input {
+  padding: 10px;
+  margin: 5px;
+  width: 80%;
 }
 </style>
 </head>
 
 <body>
 
-<nav>
-  <h2>dC Viagens 3.0</h2>
+<!-- LOGIN -->
+<div id="login" class="container ativa">
+  <h2>Login dC Viagens</h2>
 
+  <input id="user" placeholder="Nome de usuário"><br>
+  <input id="pass" type="password" placeholder="Senha"><br>
+
+  <button class="btn" onclick="login()">Entrar</button>
+  <button class="btn" onclick="registrar()">Criar conta</button>
+</div>
+
+<!-- SISTEMA -->
+<div id="app" class="container">
+
+<nav>
+  <h2>dC Viagens</h2>
   <div>
+    <span id="usuarioLogado"></span>
     <button onclick="mostrar('destinos')">Destinos</button>
-    <button onclick="mostrar('promocoes')">Promoções</button>
-    <button onclick="mostrar('pagamento')">Pagamento</button>
     <button onclick="mostrar('carrinho')">Carrinho 🛒 (<span id="qtd">0</span>)</button>
+    <button onclick="logout()">Sair</button>
   </div>
 </nav>
 
@@ -126,58 +125,30 @@ nav button:hover {
       <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a">
       <h3>Paris</h3>
       <p>R$ 3999</p>
-      <button class="btn" onclick="addCarrinho('Paris', 3999)">Adicionar</button>
+      <button class="btn" onclick="add('Paris',3999)">Comprar</button>
     </div>
 
     <div class="card">
       <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c">
       <h3>Dubai</h3>
       <p>R$ 5499</p>
-      <button class="btn" onclick="addCarrinho('Dubai', 5499)">Adicionar</button>
+      <button class="btn" onclick="add('Dubai',5499)">Comprar</button>
     </div>
 
     <div class="card">
       <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e">
       <h3>Maldivas</h3>
       <p>R$ 6500</p>
-      <button class="btn" onclick="addCarrinho('Maldivas', 6500)">Adicionar</button>
+      <button class="btn" onclick="add('Maldivas',6500)">Comprar</button>
     </div>
 
     <div class="card">
       <img src="https://res.cloudinary.com/traveltripperweb/image/upload/c_fit,f_auto,h_1200,q_auto,w_1200/v1627681436/bgvlhnmlrwyhm2xwdock.jpg">
       <h3>Miami</h3>
       <p>R$ 7299</p>
-      <button class="btn" onclick="addCarrinho('Miami', 7299)">Adicionar</button>
+      <button class="btn" onclick="add('Miami',7299)">Comprar</button>
     </div>
 
-  </div>
-</div>
-
-<!-- PROMOÇÕES -->
-<div id="promocoes" class="aba container">
-  <h2>Promoções</h2>
-
-  <div class="destinos">
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34">
-      <h3>Paris Promo</h3>
-      <p>R$ 3499</p>
-      <button class="btn" onclick="addCarrinho('Paris Promo', 3499)">Adicionar</button>
-    </div>
-  </div>
-</div>
-
-<!-- PAGAMENTO -->
-<div id="pagamento" class="aba container">
-  <h2>Pagamento</h2>
-
-  <div class="cart">
-    <p>📱 WhatsApp: (31) 993597938</p>
-    <p>💳 Pix / Cartão / Transferência</p>
-
-    <button class="btn" onclick="mostrar('carrinho')">
-      Ver Carrinho
-    </button>
   </div>
 </div>
 
@@ -194,90 +165,90 @@ nav button:hover {
   </div>
 </div>
 
-<script>
-let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+</div>
 
-function salvar() {
-  localStorage.setItem("carrinho", JSON.stringify(carrinho));
+<script>
+let user = localStorage.getItem("user");
+let carrinho = JSON.parse(localStorage.getItem("cart_"+user)) || [];
+
+function registrar(){
+  let u = document.getElementById("user").value;
+  let p = document.getElementById("pass").value;
+
+  if(!u || !p){
+    alert("Preencha tudo!");
+    return;
+  }
+
+  localStorage.setItem("user_"+u, p);
+  alert("Conta criada!");
 }
 
-function mostrar(id) {
-  document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
+function login(){
+  let u = document.getElementById("user").value;
+  let p = document.getElementById("pass").value;
+
+  let saved = localStorage.getItem("user_"+u);
+
+  if(saved === p){
+    localStorage.setItem("user", u);
+    location.reload();
+  } else {
+    alert("Login inválido!");
+  }
+}
+
+function logout(){
+  localStorage.removeItem("user");
+  location.reload();
+}
+
+if(user){
+  document.getElementById("login").style.display = "none";
+  document.getElementById("app").style.display = "block";
+  document.getElementById("usuarioLogado").innerText = "👤 " + user;
+}
+
+function mostrar(id){
+  document.querySelectorAll('.aba').forEach(a=>a.classList.remove('ativa'));
   document.getElementById(id).classList.add('ativa');
 }
 
-function addCarrinho(nome, preco) {
-  let item = carrinho.find(i => i.nome === nome);
+function salvar(){
+  localStorage.setItem("cart_"+user, JSON.stringify(carrinho));
+}
 
-  if (item) {
-    item.qtd++;
-  } else {
-    carrinho.push({ nome, preco, qtd: 1 });
-  }
-
+function add(nome,preco){
+  carrinho.push({nome,preco});
   salvar();
   atualizar();
 }
 
-function remover(index) {
-  carrinho.splice(index, 1);
-  salvar();
-  atualizar();
-}
-
-function mudarQtd(index, valor) {
-  carrinho[index].qtd += valor;
-
-  if (carrinho[index].qtd <= 0) {
-    carrinho.splice(index, 1);
-  }
-
-  salvar();
-  atualizar();
-}
-
-function atualizar() {
-  document.getElementById("qtd").innerText = carrinho.reduce((a,b)=>a+b.qtd,0);
+function atualizar(){
+  document.getElementById("qtd").innerText = carrinho.length;
 
   let lista = document.getElementById("lista");
   lista.innerHTML = "";
 
   let total = 0;
 
-  carrinho.forEach((item, index) => {
-    total += item.preco * item.qtd;
-
-    lista.innerHTML += `
-      <div class="item">
-        <span>${item.nome} - R$ ${item.preco}</span>
-
-        <div>
-          <span class="qty-btn" onclick="mudarQtd(${index}, -1)">➖</span>
-          ${item.qtd}
-          <span class="qty-btn" onclick="mudarQtd(${index}, 1)">➕</span>
-          <button class="btn" onclick="remover(${index})">❌</button>
-        </div>
-      </div>
-    `;
+  carrinho.forEach(i=>{
+    total += i.preco;
+    lista.innerHTML += `<div>${i.nome} - R$ ${i.preco}</div>`;
   });
 
   document.getElementById("total").innerText = total;
 }
 
-function finalizar() {
-  if (carrinho.length === 0) {
-    alert("Carrinho vazio!");
-    return;
-  }
+function finalizar(){
+  let msg = "Pedido de: " + user + "\n\n";
 
-  let msg = "Olá, quero comprar:\n";
-
-  carrinho.forEach(i => {
-    msg += `- ${i.nome} x${i.qtd} R$ ${i.preco * i.qtd}\n`;
+  carrinho.forEach(i=>{
+    msg += `- ${i.nome} R$ ${i.preco}\n`;
   });
 
   let url = "https://wa.me/5531993597938?text=" + encodeURIComponent(msg);
-  window.open(url, "_blank");
+  window.open(url);
 }
 
 atualizar();
