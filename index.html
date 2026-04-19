@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>dC Viagens</title>
+<title>dC Viagens 3.0</title>
 
 <style>
 body {
@@ -25,7 +25,7 @@ nav button {
   background: none;
   border: none;
   color: white;
-  margin-left: 15px;
+  margin-left: 10px;
   font-weight: bold;
   cursor: pointer;
 }
@@ -39,19 +39,14 @@ nav button:hover {
   text-align: center;
 }
 
-.aba {
-  display: none;
-}
-
-.ativa {
-  display: block;
-}
+.aba { display: none; }
+.ativa { display: block; }
 
 .destinos {
   display: flex;
   justify-content: center;
-  gap: 20px;
   flex-wrap: wrap;
+  gap: 20px;
 }
 
 .card {
@@ -70,15 +65,13 @@ nav button:hover {
 }
 
 .btn {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 10px 15px;
   background: #ff6600;
   color: white;
   border: none;
+  padding: 8px 12px;
   border-radius: 5px;
   cursor: pointer;
-  font-weight: bold;
+  margin-top: 8px;
 }
 
 .btn:hover {
@@ -87,9 +80,9 @@ nav button:hover {
 
 .cart {
   background: white;
-  padding: 20px;
-  max-width: 500px;
+  max-width: 600px;
   margin: auto;
+  padding: 20px;
   border-radius: 10px;
 }
 
@@ -99,7 +92,13 @@ nav button:hover {
   align-items: center;
   margin: 10px 0;
   border-bottom: 1px solid #ddd;
-  padding-bottom: 5px;
+  padding-bottom: 8px;
+}
+
+.qty-btn {
+  margin: 0 5px;
+  cursor: pointer;
+  font-weight: bold;
 }
 </style>
 </head>
@@ -107,7 +106,7 @@ nav button:hover {
 <body>
 
 <nav>
-  <h2>dC Viagens</h2>
+  <h2>dC Viagens 3.0</h2>
 
   <div>
     <button onclick="mostrar('destinos')">Destinos</button>
@@ -159,14 +158,12 @@ nav button:hover {
   <h2>Promoções</h2>
 
   <div class="destinos">
-
     <div class="card">
       <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34">
       <h3>Paris Promo</h3>
       <p>R$ 3499</p>
       <button class="btn" onclick="addCarrinho('Paris Promo', 3499)">Adicionar</button>
     </div>
-
   </div>
 </div>
 
@@ -178,10 +175,9 @@ nav button:hover {
     <p>📱 WhatsApp: (31) 993597938</p>
     <p>💳 Pix / Cartão / Transferência</p>
 
-    <a class="btn" target="_blank"
-       href="https://wa.me/5531993597938">
-      Falar no WhatsApp
-    </a>
+    <button class="btn" onclick="mostrar('carrinho')">
+      Ver Carrinho
+    </button>
   </div>
 </div>
 
@@ -194,12 +190,16 @@ nav button:hover {
 
     <h3>Total: R$ <span id="total">0</span></h3>
 
-    <button class="btn" onclick="finalizar()">Finalizar Compra</button>
+    <button class="btn" onclick="finalizar()">Finalizar no WhatsApp</button>
   </div>
 </div>
 
 <script>
-let carrinho = [];
+let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+function salvar() {
+  localStorage.setItem("carrinho", JSON.stringify(carrinho));
+}
 
 function mostrar(id) {
   document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
@@ -207,17 +207,37 @@ function mostrar(id) {
 }
 
 function addCarrinho(nome, preco) {
-  carrinho.push({ nome, preco });
+  let item = carrinho.find(i => i.nome === nome);
+
+  if (item) {
+    item.qtd++;
+  } else {
+    carrinho.push({ nome, preco, qtd: 1 });
+  }
+
+  salvar();
   atualizar();
 }
 
-function removerItem(index) {
+function remover(index) {
   carrinho.splice(index, 1);
+  salvar();
+  atualizar();
+}
+
+function mudarQtd(index, valor) {
+  carrinho[index].qtd += valor;
+
+  if (carrinho[index].qtd <= 0) {
+    carrinho.splice(index, 1);
+  }
+
+  salvar();
   atualizar();
 }
 
 function atualizar() {
-  document.getElementById("qtd").innerText = carrinho.length;
+  document.getElementById("qtd").innerText = carrinho.reduce((a,b)=>a+b.qtd,0);
 
   let lista = document.getElementById("lista");
   lista.innerHTML = "";
@@ -225,12 +245,18 @@ function atualizar() {
   let total = 0;
 
   carrinho.forEach((item, index) => {
-    total += item.preco;
+    total += item.preco * item.qtd;
 
     lista.innerHTML += `
       <div class="item">
         <span>${item.nome} - R$ ${item.preco}</span>
-        <button class="btn" onclick="removerItem(${index})">❌ Remover</button>
+
+        <div>
+          <span class="qty-btn" onclick="mudarQtd(${index}, -1)">➖</span>
+          ${item.qtd}
+          <span class="qty-btn" onclick="mudarQtd(${index}, 1)">➕</span>
+          <button class="btn" onclick="remover(${index})">❌</button>
+        </div>
       </div>
     `;
   });
@@ -240,19 +266,21 @@ function atualizar() {
 
 function finalizar() {
   if (carrinho.length === 0) {
-    alert("Seu carrinho está vazio!");
+    alert("Carrinho vazio!");
     return;
   }
 
   let msg = "Olá, quero comprar:\n";
 
   carrinho.forEach(i => {
-    msg += `- ${i.nome} R$ ${i.preco}\n`;
+    msg += `- ${i.nome} x${i.qtd} R$ ${i.preco * i.qtd}\n`;
   });
 
   let url = "https://wa.me/5531993597938?text=" + encodeURIComponent(msg);
   window.open(url, "_blank");
 }
+
+atualizar();
 </script>
 
 </body>
