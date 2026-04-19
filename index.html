@@ -12,10 +12,20 @@
     }
 
     header {
-      background: #0077cc;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e');
+      background-size: cover;
       color: white;
-      padding: 20px;
       text-align: center;
+      padding: 100px 20px;
+    }
+
+    header h1 {
+      font-size: 50px;
+      margin: 0;
+    }
+
+    header p {
+      font-size: 20px;
     }
 
     section {
@@ -23,25 +33,50 @@
       text-align: center;
     }
 
+    .destinos {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: white;
+      width: 300px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      margin: 10px 0;
+    }
+
+    .card p {
+      padding: 0 15px;
+    }
+
     .btn {
       display: inline-block;
-      margin-top: 20px;
-      padding: 12px 25px;
+      margin: 15px;
+      padding: 10px 20px;
       background: #ff6600;
       color: white;
       text-decoration: none;
       border-radius: 5px;
-      font-weight: bold;
     }
 
     footer {
       background: #222;
       color: white;
       text-align: center;
-      padding: 15px;
-      position: fixed;
-      width: 100%;
-      bottom: 0;
+      padding: 20px;
     }
   </style>
 </head>
@@ -50,19 +85,41 @@
 
 <header>
   <h1>dC Viagens</h1>
-  <p>Viaje mais barato, com mais opções</p>
+  <p>Descubra o mundo com os melhores preços</p>
 </header>
 
 <section>
-  <h2>Bem-vindo ao seu próximo destino</h2>
-  <p>Encontre passagens, pacotes e experiências incríveis com os melhores preços.</p>
-  <a href="#" class="btn">Ver ofertas</a>
+  <h2>Destinos populares</h2>
+
+  <div class="destinos">
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a">
+      <h3>Paris</h3>
+      <p>A cidade do amor, cultura e história.</p>
+      <a href="#" class="btn">Ver pacote</a>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c">
+      <h3>Dubai</h3>
+      <p>Luxo, tecnologia e experiências únicas.</p>
+      <a href="#" class="btn">Ver pacote</a>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e">
+      <h3>Maldivas</h3>
+      <p>Praias paradisíacas e águas cristalinas.</p>
+      <a href="#" class="btn">Ver pacote</a>
+    </div>
+
+  </div>
 </section>
 
 <footer>
-  <p>© 2026 dC Viagens</p>
+  <p>© 2026 dC Viagens | Contato: contato@dcviagens.com</p>
 </footer>
 
 </body>
 </html>
- 
