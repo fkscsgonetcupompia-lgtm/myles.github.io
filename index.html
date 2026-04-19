@@ -1,106 +1,104 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>dC Viagens</title>
+<meta charset="UTF-8">
+<title>dC Viagens</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+}
 
-    html {
-      scroll-behavior: smooth;
-    }
+nav {
+  background: #111;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 30px;
+  align-items: center;
+}
 
-    nav {
-      background: #111;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 30px;
-    }
+nav button {
+  background: none;
+  border: none;
+  color: white;
+  margin-left: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    nav a {
-      color: white;
-      margin-left: 20px;
-      text-decoration: none;
-      font-weight: bold;
-    }
+nav button:hover {
+  color: #ff6600;
+}
 
-    nav a:hover {
-      color: #ff6600;
-    }
+.container {
+  padding: 20px;
+  text-align: center;
+}
 
-    header {
-      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e');
-      background-size: cover;
-      color: white;
-      text-align: center;
-      padding: 100px 20px;
-    }
+.aba {
+  display: none;
+}
 
-    section {
-      padding: 40px;
-      text-align: center;
-    }
+.ativa {
+  display: block;
+}
 
-    .destinos {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
+.destinos {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
 
-    .card {
-      background: white;
-      width: 300px;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      padding-bottom: 15px;
-    }
+.card {
+  background: white;
+  width: 280px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding-bottom: 15px;
+}
 
-    .card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
 
-    .btn {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px 20px;
-      background: #ff6600;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      font-weight: bold;
-    }
+.btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 15px;
+  background: #ff6600;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-    .btn:hover {
-      background: #e65c00;
-    }
+.btn:hover {
+  background: #e65c00;
+}
 
-    footer {
-      background: #222;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
+.cart {
+  background: white;
+  padding: 20px;
+  max-width: 500px;
+  margin: auto;
+  border-radius: 10px;
+}
 
-    .box {
-      background: white;
-      max-width: 600px;
-      margin: auto;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-  </style>
+.item {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+</style>
 </head>
 
 <body>
@@ -108,89 +106,125 @@
 <nav>
   <h2>dC Viagens</h2>
   <div>
-    <a href="#inicio">Início</a>
-    <a href="#destinos">Destinos</a>
-    <a href="#imagens">Imagens</a>
-    <a href="#pagamento">Pagamento</a>
+    <button onclick="mostrar('destinos')">Destinos</button>
+    <button onclick="mostrar('promocoes')">Promoções</button>
+    <button onclick="mostrar('pagamento')">Pagamento</button>
+    <button onclick="mostrar('carrinho')">Carrinho 🛒 (<span id="qtd">0</span>)</button>
   </div>
 </nav>
 
-<header id="inicio">
-  <h1>dC Viagens</h1>
-  <p>Descubra o mundo com os melhores preços</p>
-</header>
-
-<section id="destinos">
-  <h2>Destinos populares</h2>
+<!-- DESTINOS -->
+<div id="destinos" class="aba ativa container">
+  <h2>Destinos</h2>
 
   <div class="destinos">
 
     <div class="card">
       <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a">
       <h3>Paris</h3>
-      <p>R$ 3.999</p>
-      <a href="#pagamento" class="btn">Comprar</a>
+      <p>R$ 3999</p>
+      <button class="btn" onclick="addCarrinho('Paris', 3999)">Adicionar</button>
     </div>
 
     <div class="card">
       <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c">
       <h3>Dubai</h3>
-      <p>R$ 5.499</p>
-      <a href="#pagamento" class="btn">Comprar</a>
+      <p>R$ 5499</p>
+      <button class="btn" onclick="addCarrinho('Dubai', 5499)">Adicionar</button>
     </div>
 
   </div>
-</section>
+</div>
 
-<section id="imagens">
-  <h2>Galeria de Destinos</h2>
+<!-- PROMOÇÕES -->
+<div id="promocoes" class="aba container">
+  <h2>Promoções</h2>
 
   <div class="destinos">
 
     <div class="card">
       <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34">
-      <h3>Paris</h3>
-      <p>A partir de R$ 4.999</p>
-      <a href="#pagamento" class="btn">Comprar</a>
-    </div>
-
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1518684079-3c830dcef090">
-      <h3>Dubai</h3>
-      <p>A partir de R$ 9.499</p>
-      <a href="#pagamento" class="btn">Comprar</a>
+      <h3>Maldivas</h3>
+      <p>R$ 6500</p>
+      <button class="btn" onclick="addCarrinho('Maldivas', 6500)">Adicionar</button>
     </div>
 
   </div>
-</section>
+</div>
 
-<!-- NOVA ÁREA DE PAGAMENTO -->
-<section id="pagamento">
-  <h2>Pagamento e Contato</h2>
+<!-- PAGAMENTO -->
+<div id="pagamento" class="aba container">
+  <h2>Pagamento</h2>
 
-  <div class="box">
-    <h3>Finalizar Compra</h3>
+  <div class="cart">
     <p>📱 WhatsApp: (31) 993597938</p>
-    <p>📧 Email: dgn23407@gmail.com</p>
+    <p>💳 Pix / Cartão / Transferência</p>
 
-    <hr>
-
-    <h3>Formas de pagamento</h3>
-    <p>💳 Cartão de crédito</p>
-    <p>💰 Pix</p>
-    <p>🏦 Transferência bancária</p>
-
-    <br>
-
-    <a href="https://wa.me/5531993597938" class="btn" target="_blank">
-      Confirmar pelo WhatsApp
+    <a class="btn" target="_blank"
+       href="https://wa.me/5531993597938">
+      Finalizar no WhatsApp
     </a>
   </div>
-</section>
+</div>
 
-<footer>
-  <p>© 2026 dC Viagens - Todos os direitos reservados</p>
-</footer>
+<!-- CARRINHO -->
+<div id="carrinho" class="aba container">
+  <h2>Carrinho</h2>
+
+  <div class="cart">
+    <div id="lista"></div>
+
+    <h3>Total: R$ <span id="total">0</span></h3>
+
+    <a class="btn" onclick="finalizar()">Finalizar Compra</a>
+  </div>
+</div>
+
+<script>
+let carrinho = [];
+
+function mostrar(id) {
+  document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
+  document.getElementById(id).classList.add('ativa');
+}
+
+function addCarrinho(nome, preco) {
+  carrinho.push({ nome, preco });
+  atualizar();
+}
+
+function atualizar() {
+  document.getElementById("qtd").innerText = carrinho.length;
+
+  let lista = document.getElementById("lista");
+  lista.innerHTML = "";
+
+  let total = 0;
+
+  carrinho.forEach(item => {
+    total += item.preco;
+    lista.innerHTML += `
+      <div class="item">
+        <span>${item.nome}</span>
+        <span>R$ ${item.preco}</span>
+      </div>
+    `;
+  });
+
+  document.getElementById("total").innerText = total;
+}
+
+function finalizar() {
+  let msg = "Olá, quero comprar:\n";
+
+  carrinho.forEach(i => {
+    msg += `- ${i.nome} R$ ${i.preco}\n`;
+  });
+
+  let url = "https://wa.me/5531993597938?text=" + encodeURIComponent(msg);
+  window.open(url, "_blank");
+}
+</script>
 
 </body>
 </html>
