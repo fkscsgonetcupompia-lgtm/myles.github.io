@@ -1,14 +1,4 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Meu site</title>
-</head>
-<body>
-  <h1>Olá, mundo!</h1>
-  <p>Esse é o mais novo site de viagens para você comprar mais barato e com mais planos, confira aqui, dC viagens.</p>
-</body>
-</html>
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -33,10 +23,6 @@
       text-align: center;
     }
 
-    h1 {
-      margin: 0;
-    }
-
     .btn {
       display: inline-block;
       margin-top: 20px;
@@ -46,10 +32,6 @@
       text-decoration: none;
       border-radius: 5px;
       font-weight: bold;
-    }
-
-    .btn:hover {
-      background: #e65c00;
     }
 
     footer {
@@ -74,12 +56,11 @@
 <section>
   <h2>Bem-vindo ao seu próximo destino</h2>
   <p>Encontre passagens, pacotes e experiências incríveis com os melhores preços.</p>
-
   <a href="#" class="btn">Ver ofertas</a>
 </section>
 
 <footer>
-  <p>© 2026 dC Viagens - Todos os direitos reservados</p>
+  <p>© 2026 dC Viagens</p>
 </footer>
 
 </body>
