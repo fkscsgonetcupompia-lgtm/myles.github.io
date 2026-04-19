@@ -19,6 +19,26 @@
       padding: 100px 20px;
     }
 
+    nav {
+      background: #111;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+    }
+
+    nav a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #ff6600;
+    }
+
     section {
       padding: 40px;
       text-align: center;
@@ -66,12 +86,21 @@
 
 <body>
 
+<nav>
+  <h2>dC Viagens</h2>
+  <div>
+    <a href="#">Início</a>
+    <a href="#destinos">Destinos</a>
+    <a href="#contato">Contato</a>
+  </div>
+</nav>
+
 <header>
   <h1>dC Viagens</h1>
   <p>Descubra o mundo com os melhores preços</p>
 </header>
 
-<section>
+<section id="destinos">
   <h2>Destinos populares</h2>
 
   <div class="destinos">
