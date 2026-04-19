@@ -96,6 +96,7 @@ nav button:hover {
 .item {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin: 10px 0;
   border-bottom: 1px solid #ddd;
   padding-bottom: 5px;
@@ -210,6 +211,11 @@ function addCarrinho(nome, preco) {
   atualizar();
 }
 
+function removerItem(index) {
+  carrinho.splice(index, 1);
+  atualizar();
+}
+
 function atualizar() {
   document.getElementById("qtd").innerText = carrinho.length;
 
@@ -218,13 +224,13 @@ function atualizar() {
 
   let total = 0;
 
-  carrinho.forEach(item => {
+  carrinho.forEach((item, index) => {
     total += item.preco;
 
     lista.innerHTML += `
       <div class="item">
-        <span>${item.nome}</span>
-        <span>R$ ${item.preco}</span>
+        <span>${item.nome} - R$ ${item.preco}</span>
+        <button class="btn" onclick="removerItem(${index})">❌ Remover</button>
       </div>
     `;
   });
@@ -233,6 +239,11 @@ function atualizar() {
 }
 
 function finalizar() {
+  if (carrinho.length === 0) {
+    alert("Seu carrinho está vazio!");
+    return;
+  }
+
   let msg = "Olá, quero comprar:\n";
 
   carrinho.forEach(i => {
