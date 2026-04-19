@@ -11,12 +11,8 @@
       background: #f4f4f4;
     }
 
-    header {
-      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e');
-      background-size: cover;
-      color: white;
-      text-align: center;
-      padding: 100px 20px;
+    html {
+      scroll-behavior: smooth;
     }
 
     nav {
@@ -37,6 +33,14 @@
 
     nav a:hover {
       color: #ff6600;
+    }
+
+    header {
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e');
+      background-size: cover;
+      color: white;
+      text-align: center;
+      padding: 100px 20px;
     }
 
     section {
@@ -89,16 +93,23 @@
 <nav>
   <h2>dC Viagens</h2>
   <div>
-    <a href="#">Início</a>
+    <a href="#inicio">Início</a>
     <a href="#destinos">Destinos</a>
+    <a href="#imagens">Imagens</a>
     <a href="#contato">Contato</a>
   </div>
 </nav>
 
-<header>
+<header id="inicio">
   <h1>dC Viagens</h1>
   <p>Descubra o mundo com os melhores preços</p>
 </header>
+
+<section id="contato">
+  <h2>Contato</h2>
+  <p>📱 WhatsApp: (31) 99999-9999</p>
+  <p>📧 Email: dgn23407@gmail.com</p>
+</section>
 
 <section id="destinos">
   <h2>Destinos populares</h2>
@@ -108,22 +119,31 @@
     <div class="card">
       <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a">
       <h3>Paris</h3>
-      <p>Pacote 5 dias - R$ 3.999</p>
-      <a href="https://wa.me/5531999999999?text=Quero%20comprar%20pacote%20para%20Paris" class="btn">Comprar</a>
+      <p>R$ 3.999</p>
     </div>
 
     <div class="card">
       <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c">
       <h3>Dubai</h3>
-      <p>Pacote 7 dias - R$ 5.499</p>
-      <a href="https://wa.me/5531999999999?text=Quero%20comprar%20pacote%20para%20Dubai" class="btn">Comprar</a>
+      <p>R$ 5.499</p>
+    </div>
+
+  </div>
+</section>
+
+<section id="imagens">
+  <h2>Galeria</h2>
+
+  <div class="destinos">
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34">
+      <h3>Paris</h3>
     </div>
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e">
-      <h3>Maldivas</h3>
-      <p>Pacote 6 dias - R$ 6.999</p>
-      <a href="https://wa.me/5531999999999?text=Quero%20comprar%20pacote%20para%20Maldivas" class="btn">Comprar</a>
+      <img src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad">
+      <h3>Miami</h3>
     </div>
 
   </div>
